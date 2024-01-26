@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
 	[Header("Movement")]
 	[SerializeField] private float moveSpeed = 6f;
-	[SerializeField] private float airMultiplier = 0.4f;
+	public float airMultiplier = 0.2f;
 	private float movementMultiplier = 10f;
 
 	[Header("Sprinting")]
@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
 	private RaycastHit slopeHit;
 	
 	private float playerHeight = 2f;
+	
+	[HideInInspector] public bool isMoving;
 
 	private bool OnSlope()
 	{
@@ -68,15 +70,17 @@ public class PlayerMovement : MonoBehaviour
 	private void Update()
 	{
 		isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+		if (rb.velocity.x > 0 && rb.velocity.y > 0 && rb.velocity.z > 0)
+			isMoving = true;
+		else
+			isMoving = false;
 
 		MyInput();
 		ControlDrag();
 		ControlSpeed();
 
 		if (Input.GetKeyDown(jumpKey) && isGrounded)
-		{
 			Jump();
-		}
 
 		slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
 	}

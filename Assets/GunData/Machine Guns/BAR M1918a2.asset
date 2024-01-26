@@ -16,18 +16,13 @@ MonoBehaviour:
   damage: 4
   maxDistance: 600
   autoShoot: 1
-  isAimable: 0
-  aimXPos: 0
-  aimFOV: 0
-  normalFOV: 0
-  lerpTime: 0
   recoilX: -2
   recoilY: 2
   recoilZ: 0.5
   snappiness: 6
   returnSpeed: 3
   shootForce: 2
-  currentAmmo: 96
+  currentAmmo: 160
   magSize: 160
   fireRate: 1000
   reloadTime: 3
