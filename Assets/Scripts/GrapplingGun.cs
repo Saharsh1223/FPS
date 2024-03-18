@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GrapplingGun : MonoBehaviour
 {
-
+	public AudioSource grapplingSound;
 	private Vector3 grapplePoint;
 	public LayerMask whatIsGrappleable;
 	public Transform gunTip, camera, player;
@@ -23,6 +23,7 @@ public class GrapplingGun : MonoBehaviour
 		if (Input.GetMouseButtonDown(0))
 		{
 			StartGrapple();
+			grapplingSound.Play();
 		}
 		else if (Input.GetMouseButtonUp(0))
 		{

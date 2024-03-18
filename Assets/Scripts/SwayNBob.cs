@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SwayNBob : MonoBehaviour
-{
-
-	
+{	
 	public PlayerMovement mover;
 
 	[Header("Sway")]
@@ -36,14 +34,7 @@ public class SwayNBob : MonoBehaviour
 	public Vector3 multiplier;
 	Vector3 bobEulerRotation;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-		
-	}
-
-	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		GetInput();
 
@@ -59,7 +50,7 @@ public class SwayNBob : MonoBehaviour
 	Vector2 walkInput;
 	Vector2 lookInput;
 
-	void GetInput()
+	private void GetInput()
 	{
 		walkInput.x = Input.GetAxis("Horizontal");
 		walkInput.y = Input.GetAxis("Vertical");
@@ -70,7 +61,7 @@ public class SwayNBob : MonoBehaviour
 	}
 
 
-	void Sway()
+	private void Sway()
 	{
 		Vector3 invertLook = lookInput *-step;
 		invertLook.x = Mathf.Clamp(invertLook.x, -maxStepDistance, maxStepDistance);
@@ -79,7 +70,7 @@ public class SwayNBob : MonoBehaviour
 		swayPos = invertLook;
 	}
 
-	void SwayRotation()
+	private void SwayRotation()
 	{
 		Vector2 invertLook = lookInput * -rotationStep;
 		invertLook.x = Mathf.Clamp(invertLook.x, -maxRotationStep, maxRotationStep);
@@ -87,13 +78,13 @@ public class SwayNBob : MonoBehaviour
 		swayEulerRot = new Vector3(invertLook.y, invertLook.x, invertLook.x);
 	}
 
-	void CompositePositionRotation()
+	private void CompositePositionRotation()
 	{
 		transform.localPosition = Vector3.Lerp(transform.localPosition, swayPos + bobPosition, Time.deltaTime * smooth);
 		transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(swayEulerRot) * Quaternion.Euler(bobEulerRotation), Time.deltaTime * smoothRot);
 	}
 
-	void BobOffset()
+	private void BobOffset()
 	{
 		speedCurve += Time.deltaTime * (mover.isGrounded ? (Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"))*bobExaggeration : 1f) + 0.01f;
 
@@ -102,7 +93,7 @@ public class SwayNBob : MonoBehaviour
 		bobPosition.z = -(walkInput.y * travelLimit.z);
 	}
 
-	void BobRotation()
+	private void BobRotation()
 	{
 		bobEulerRotation.x = (walkInput != Vector2.zero ? multiplier.x * (Mathf.Sin(2*speedCurve)) : multiplier.x * (Mathf.Sin(2*speedCurve) / 2));
 		bobEulerRotation.y = (walkInput != Vector2.zero ? multiplier.y * curveCos : 0);

@@ -10,18 +10,13 @@ public class Gun : MonoBehaviour
 	[SerializeField] private Recoil recoil;
 	[SerializeField] private ParticleSystem muzzleFlash;
 	[SerializeField] private AudioSource shootAudio;
+	[SerializeField] private AudioSource reloadAudio;
 	[SerializeField] private TMP_Text gunText;
-	
-	// [Header("Aim References - Ignore if not aimable")]
-	// [SerializeField] private Transform aimPos;
-	// [SerializeField] private Transform startPos;
-	// [SerializeField] private Transform posObj;
 	
 	[Header("Animation")]
 	[SerializeField] private Animator anim;
 	
 	private float timeSinceLastShot;
-	
 	
 	private void Start()
 	{
@@ -46,6 +41,8 @@ public class Gun : MonoBehaviour
 	{
 		gunData.isReloading = true;
 		anim.CrossFadeInFixedTime(gunData.name + "_Reload", 0f);
+		
+		reloadAudio.Play();
 		
 		yield return new WaitForSeconds(gunData.reloadTime);
 		

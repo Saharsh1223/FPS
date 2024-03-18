@@ -1,9 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Gun", menuName = "Weapons/GunCreator")]
-public class GunData : ScriptableObject
+public class DroppedGunData : MonoBehaviour
 {
-	[Header("Info")]
+    [Header("Info")]
 	public new string name;
 	
 	[Space]
