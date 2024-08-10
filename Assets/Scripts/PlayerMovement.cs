@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private float moveSpeed = 6f;
 	public float airMultiplier = 0.2f;
 	private float movementMultiplier = 10f;
+	
 
 	[Header("Sprinting")]
 	[SerializeField] private float walkSpeed = 4f;
@@ -132,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	private void MovePlayer()
-	{
+	{	
 		if (isGrounded && !OnSlope())
 		{
 			rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);

@@ -22,7 +22,8 @@ MonoBehaviour:
   snappiness: 6
   returnSpeed: 2
   shootForce: 4
-  currentAmmo: 40
+  currentAmmo: 0
+  totalAmmo: 0
   magSize: 40
   fireRate: 600
   reloadTime: 1

@@ -23,7 +23,6 @@ public class GrapplingGun : MonoBehaviour
 		if (Input.GetMouseButtonDown(0))
 		{
 			StartGrapple();
-			grapplingSound.Play();
 		}
 		else if (Input.GetMouseButtonUp(0))
 		{
@@ -75,6 +74,8 @@ public class GrapplingGun : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.SphereCast(camera.position, aimAssistSize, camera.forward, out hit, maxDistance, whatIsGrappleable))
 		{
+			grapplingSound.Play();
+			
 			grapplePoint = hit.point;
 			joint = player.gameObject.AddComponent<SpringJoint>();
 			joint.autoConfigureConnectedAnchor = false;

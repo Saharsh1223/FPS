@@ -22,6 +22,9 @@ public class Gun : MonoBehaviour
 	{
 		GunInput.shootInput += Shoot;
 		GunInput.reloadInput += StartReload;
+		
+		gunData.currentAmmo = gunData.magSize;
+		gunData.totalAmmo = gunData.magSize;
 	}
 	
 	private bool CanShoot() => !gunData.isReloading && timeSinceLastShot > 1f / (gunData.fireRate / 60);
@@ -33,20 +36,43 @@ public class Gun : MonoBehaviour
 		if (!gunData.isReloading && this.gameObject.activeSelf)
 		{
 			StartCoroutine(Reload());
-			Debug.Log("Reloading");
 		}
 	}
 	
 	private IEnumerator Reload()
 	{
+		// Calculate how much ammo is needed to fill the magazine
+		int missingAmmo = gunData.magSize - gunData.currentAmmo;
+
+		// If there's no missing ammo, we can't reload
+		if (missingAmmo <= 0)
+		{
+			Debug.Log("Can't reload right now.");
+			yield break;
+		}
+		
 		gunData.isReloading = true;
 		anim.CrossFadeInFixedTime(gunData.name + "_Reload", 0f);
-		
 		reloadAudio.Play();
-		
+
+		Debug.Log("Reloading");
+
+		// Wait for the reload time to finish
 		yield return new WaitForSeconds(gunData.reloadTime);
 		
-		gunData.currentAmmo = gunData.magSize;
+		// Assuming you have a total ammo pool from which to draw, we refill the magazine
+		if (gunData.totalAmmo >= missingAmmo)
+		{
+			// Full reload possible
+			gunData.currentAmmo += missingAmmo;
+			gunData.totalAmmo -= missingAmmo;
+		}
+		else
+		{
+			// Partial reload if not enough total ammo
+			gunData.currentAmmo += gunData.totalAmmo;
+			gunData.totalAmmo = 0;
+		}
 		
 		gunData.isReloading = false;
 	}
@@ -80,7 +106,7 @@ public class Gun : MonoBehaviour
 		recoil.snappiness = gunData.snappiness;
 		recoil.returnSpeed = gunData.returnSpeed;
 		
-		gunText.text = gunData.currentAmmo + "/" + gunData.magSize;
+		gunText.text = gunData.currentAmmo + "/" + gunData.magSize + " (" + gunData.totalAmmo + ")";
 	}
 
 	private void OnGunShot(RaycastHit hitInfo)

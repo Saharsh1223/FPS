@@ -64,7 +64,7 @@ public class WeaponSwitcher : MonoBehaviour
 		{
 			if (hit.collider.CompareTag("Untagged"))
 			{
-				pickupText.text = "Pickup (E)";
+				pickupText.text = "PICKUP (E)";
 			}
 		}
 		else
@@ -149,7 +149,10 @@ public class WeaponSwitcher : MonoBehaviour
 
 		// Instantiate the dropped weapon prefab
 		GameObject droppedWeapon = Instantiate(weaponPrefabs[wIndex], weapons[weaponIndex].parent.transform.position, Quaternion.identity);
-		droppedWeapon.name = droppedWeapon.name.Replace("(Clone)", "");
+		
+		String name = droppedWeapon.name;
+		
+		droppedWeapon.name = name.Replace("(Clone)", "");
 		droppedWeapon.tag = "DroppedWeapon";
 		
 		//Set gun data
@@ -173,6 +176,7 @@ public class WeaponSwitcher : MonoBehaviour
 			droppedGunData.shootForce = weaponGun.gunData.shootForce;
 			
 			droppedGunData.currentAmmo = weaponGun.gunData.currentAmmo;
+			droppedGunData.totalAmmo = weaponGun.gunData.totalAmmo;
 			droppedGunData.magSize = weaponGun.gunData.magSize;
 			
 			droppedGunData.fireRate = weaponGun.gunData.fireRate;
@@ -266,6 +270,7 @@ public class WeaponSwitcher : MonoBehaviour
 					weaponGun.gunData.shootForce = droppedGunData.shootForce;
 					
 					weaponGun.gunData.currentAmmo = droppedGunData.currentAmmo;
+					weaponGun.gunData.totalAmmo = droppedGunData.totalAmmo;
 					weaponGun.gunData.magSize = droppedGunData.magSize;
 					
 					weaponGun.gunData.fireRate = droppedGunData.fireRate;
@@ -273,9 +278,6 @@ public class WeaponSwitcher : MonoBehaviour
 					
 					Debug.Log("Weapon properties successfully inherited from dropped weapon.");
 				}
-				
-				// Delete the prefab of the dropped weapon
-				Destroy(hit.collider.gameObject);
 
 				// Reorder the keys
 				ReorderKeys();
@@ -285,6 +287,9 @@ public class WeaponSwitcher : MonoBehaviour
 				Select(selectedWeapon);
 				
 				Debug.Log("Successfully picked up " + weapon.name + "!");
+				
+				// Delete the prefab of the dropped weapon
+				Destroy(hit.collider.transform.parent.parent.gameObject);
 			}
 		}
 		else
@@ -292,8 +297,6 @@ public class WeaponSwitcher : MonoBehaviour
 			Debug.Log("Raycast did not hit anything.");
 		}
 	}
-
-
 
 	private void ReorderKeys()
 	{
@@ -311,5 +314,5 @@ public class WeaponSwitcher : MonoBehaviour
 		}
 	}
 
-	private void OnWeaponSelected() { }
+	private void OnWeaponSelected() {}
 }

@@ -23,6 +23,7 @@ MonoBehaviour:
   returnSpeed: 2
   shootForce: 3
   currentAmmo: 60
+  totalAmmo: 60
   magSize: 60
   fireRate: 800
   reloadTime: 1
