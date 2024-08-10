@@ -45,7 +45,7 @@ public class Gun : MonoBehaviour
 		int missingAmmo = gunData.magSize - gunData.currentAmmo;
 
 		// If there's no missing ammo, we can't reload
-		if (missingAmmo <= 0)
+		if (missingAmmo <= 0 || gunData.totalAmmo == 0)
 		{
 			Debug.Log("Can't reload right now.");
 			yield break;
