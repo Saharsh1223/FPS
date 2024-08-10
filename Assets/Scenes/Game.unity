@@ -39389,7 +39389,7 @@ MonoBehaviour:
   totalAmmo: 0
   magSize: 160
   fireRate: 1000
-  reloadTime: 3
+  reloadTime: 2
   isReloading: 0
 --- !u!1 &2429110931881416815
 GameObject:

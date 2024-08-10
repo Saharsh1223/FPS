@@ -23,8 +23,8 @@ MonoBehaviour:
   returnSpeed: 3
   shootForce: 2
   currentAmmo: 160
-  totalAmmo: 160
+  totalAmmo: 107
   magSize: 160
   fireRate: 1000
-  reloadTime: 3
+  reloadTime: 2
   isReloading: 0
